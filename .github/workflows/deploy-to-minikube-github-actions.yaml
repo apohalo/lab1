@@ -9,7 +9,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Start minikube
-      uses: medyagh/setup-minikube@master
+      uses: medyagh/setup-minikube@v2.10.0
+    - name: Check Minikube Status
+      run: minikube status
     - name: Try the cluster !
       run: kubectl get pods -A
     - name: Build image
@@ -18,7 +20,9 @@ jobs:
           eval $(minikube -p minikube docker-env)
           docker build -f ./Dockerfile -t devopshint/node-app:latest .
           echo -n "verifying images:"
-          docker images         
+          docker images
+    - name: Print Minikube Docker Env
+      run: minikube -p minikube docker-env
     - name: Deploy to minikube
       run:
         kubectl apply -f k8s-node-app.yaml
