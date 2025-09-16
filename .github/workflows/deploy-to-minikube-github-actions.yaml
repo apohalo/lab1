@@ -16,9 +16,9 @@ jobs:
       run: |
           export SHELL=/bin/bash
           eval $(minikube -p minikube docker-env)
-          docker build -f ./Dockerfile -t devopshint/node-app:latest .
+          docker build -f ./Dockerfile -t devopshint/node-app:v2 .
           echo -n "verifying images:"
-          docker images         
+          docker images
     - name: Deploy to minikube
       run:
         kubectl apply -f k8s-node-app.yaml
@@ -29,8 +29,7 @@ jobs:
       run: |
             kubectl get pods -o wide
             kubectl get svc
-            kubectl exec -it nodejs-app -- printenv | grep PORT
-            kubectl exec -it nodejs-app -- cat server.js | head -n 20
+
     - name: Debug logs
       run: |
            kubectl logs deployment/nodejs-app
@@ -38,9 +37,9 @@ jobs:
 
     - name: Port forward and test
       run: |
-        kubectl port-forward service/nodejs-app 8080:80 &
+        kubectl port-forward service/nodejs-app 3000:80 &
         sleep 5
-        curl http://localhost:8080
+        curl http://localhost:3000
     - name: Test service URLs
       run: |
           minikube service list
