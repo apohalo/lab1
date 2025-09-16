@@ -10,6 +10,7 @@ jobs:
     - uses: actions/checkout@v2
     - name: Start minikube
       uses: medyagh/setup-minikube@master
+      run: minikube start --driver=docker --memory=4096 --cpus=2
     - name: Check Minikube Status
       run: minikube status
     - name: Try the cluster !
@@ -30,3 +31,4 @@ jobs:
       run: |
           minikube service list
           minikube service nodejs-app --url
+          cat /tmp/minikube_service_ba873920b9ac8d1e0c86efebfbdc1732e36079e5_0.log
