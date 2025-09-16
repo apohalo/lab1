@@ -36,7 +36,7 @@ jobs:
 
     - name: Port forward and test
       run: |
-        kubectl port-forward service/nodejs-app 8080:3000 &
+        kubectl port-forward service/nodejs-app 8080:80 &
         sleep 5
         curl http://localhost:8080
     - name: Test service URLs
