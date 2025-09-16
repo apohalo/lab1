@@ -29,6 +29,9 @@ jobs:
       run: |
             kubectl get pods -o wide
             kubectl get svc
+    - name: Debug logs
+      run: kubectl logs deployment/nodejs-app --tail=50
+
     - name: Port forward and test
       run: |
         kubectl port-forward service/nodejs-app 8080:80 &
