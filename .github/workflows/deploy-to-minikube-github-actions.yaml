@@ -31,7 +31,7 @@ jobs:
             kubectl get svc
     - name: Debug logs
       run: |
-           kubectl logs deployment/nodejs-app --tail=50
+           kubectl logs deployment/nodejs-app
            kubectl get endpoints
 
     - name: Port forward and test
